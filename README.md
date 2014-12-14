@@ -1,6 +1,10 @@
-# streamss
+# streamss 
 
 > A stream2 collection.
+
+![NPM version](https://badge.fury.io/js/streamss.svg) ![Build Status](https://secure.travis-ci.org/commenthol/streamss.svg?branch=master)
+
+
 
 Documentation is on its way :)
 

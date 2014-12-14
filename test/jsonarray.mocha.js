@@ -51,6 +51,7 @@ describe('#JsonArray', function(){
 	it('parse JsonArray and show errors', function(done){
 		var cnt = 0,
 			last,
+			errs = [],
 			rs = fs.createReadStream(__dirname + '/test.json');
 
 		rs
@@ -60,6 +61,7 @@ describe('#JsonArray', function(){
 				function transform(obj) {
 					if (obj instanceof Error) {
 						//~ console.error(obj.message);
+						errs.push(obj.message);
 					}
 					else {
 						this.push(obj);
@@ -74,6 +76,8 @@ describe('#JsonArray', function(){
 				},
 				function flush() {
 					assert.equal(cnt, 5);
+					assert.equal(errs.length, 1);
+					assert.equal(errs[0], 'error parsing: "Bad line" : SyntaxError: Unexpected token B');
 					assert.deepEqual(last, {"5":{"five":{"cinco":5}}});
 					done();
 				}
