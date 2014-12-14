@@ -10,9 +10,12 @@
     "test": "test"
   },
   "dependencies": {
+    "readable-stream": "~1.0.33",
     "streamss-through": "0.0.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "~2.0.1"
+  },
   "scripts": {
     "test": "mocha test/*.mocha.js",
     "lint": "jshint *.js */*.js"
