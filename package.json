@@ -1,0 +1,35 @@
+{
+  "name": "streamss",
+  "description": "stream2 event streams",
+  "version": "0.0.1",
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "streamss-through": "0.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha test/*.mocha.js",
+    "lint": "jshint *.js */*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/commenthol/streamss"
+  },
+  "keywords": [
+    "stream2",
+    "event-streams"
+  ],
+  "author": "commenthol <commenthol@gmail.com>",
+  "maintainers": "commenthol <commenthol@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/commenthol/streamers/issues"
+  },
+  "homepage": "https://github.com/commenthol/streamers"
+}

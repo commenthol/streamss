@@ -1,0 +1,23 @@
+# Stream (from http://nodejs.org/api/stream.html)
+
+Stability: 2 - Unstable
+A stream is an abstract interface implemented by various objects in Node. For example a request to an HTTP server is a stream, as is stdout. Streams are readable, writable, or both. All streams are instances of EventEmitter
+
+You can load the Stream base classes by doing require('stream'). There are base classes provided for Readable streams, Writable streams, Duplex streams, and Transform streams.
+
+This document is split up into 3 sections. The first explains the parts of the API that you need to be aware of to use streams in your programs. If you never implement a streaming API yourself, you can stop there.
+
+The second section explains the parts of the API that you need to use if you implement your own custom streams yourself. The API is designed to make this easy for you to do.
+
+The third section goes into more depth about how streams work, including some of the internal mechanisms and functions that you should probably not modify unless you definitely know what you are doing.
+
+安定性：2 - 不安定
+ストリームは、ノード内のさまざまなオブジェクトによって実装する抽象インタフェースです。 stdoutですたとえば、HTTPサーバへの要求は、ストリームである。ストリームは、読みやすい書き込み可能な、またはその両方である。すべてのストリームが持つEventEmitterのインスタンスである
+
+あなたは（ 'ストリーム'）を必要とすることにより、ストリーム基底クラスをロードすることができます。そこに読み込み可能なストリーム用に設けられたベースクラス、書き込み可能ストリームがあり、二重ストリーム、およびストリームを変換します。
+
+この文書は、3つのセクションに分割されている。最初は、あなたのプログラムでストリームを使用することを認識する必要があり、APIの一部を説明しています。あなたはストリーミングを自分でAPI実装することはありません場合は、そこに停止することができます。
+
+独自のカスタムを自分でストリーム実装する場合には、第2節では、使用する必要があるAPIの一部を説明しています。 APIは、あなたがするために、これは簡単にできるように設計されています。
+
+3番目のセクションでは、ストリームは、あなたは間違いなくあなたが何をしているかを知っている場合を除き、おそらく変更しないでください内部のメカニズムと機能のいくつかを含め、どのように機能するかについてより深くに入ります。
