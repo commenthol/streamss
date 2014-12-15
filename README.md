@@ -2,7 +2,8 @@
 
 > A stream2 collection.
 
-![NPM version](https://badge.fury.io/js/streamss.svg) ![Build Status](https://secure.travis-ci.org/commenthol/streamss.svg?branch=master)
+![NPM version](https://badge.fury.io/js/streamss.svg)
+[![Build Status](https://secure.travis-ci.org/commenthol/streamss.svg?branch=master)](https://travis-ci.org/commenthol/streamss)
 
 Works with node v0.8.x and greater.
 For node v0.8.x the user-land copy [`readable-stream`][readable-stream] is used.
