@@ -87,12 +87,12 @@ describe('#JsonArray', function(){
 	it('parse and stringify JsonArray', function(done){
 		var all = '',
 			rs = fs.createReadStream(__dirname + '/test.json'),
-			ws = fs.createWriteStream(__dirname + '/test-stringify.json');
+			ws = fs.createWriteStream(__dirname + '/out-stringify.json');
 
 		rs
 			.pipe(SplitLine({chomp: true}))
-			.pipe(JsonArray())
-			.pipe(JsonArray({stringify: true}))
+			.pipe(JsonArray.parse())
+			.pipe(JsonArray.stringify())
 			.pipe(Through(
 				function transform(line) {
 					all += line.toString();

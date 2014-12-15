@@ -1,2 +1,5 @@
 node_modules/
+test/out.txt
+test/out-stringify.json
 *.log
+*.tgz
