@@ -5,6 +5,13 @@
 ![NPM version](https://badge.fury.io/js/streamss.svg)
 [![Build Status](https://secure.travis-ci.org/commenthol/streamss.svg?branch=master)](https://travis-ci.org/commenthol/streamss)
 
+A stream2 collection for common stream use-cases.
+
+* Split, SplitLine : (Transform) Splits up a stream into pieces
+* JsonArray : (Transform) Json parse a line into an object stream and/or stringify back into a single line.
+* ReadArray : (Readable) Writes an Array as stream chunks
+* WriteArray : (Writable) Collects stream chunks into Array
+
 Works with node v0.8.x and greater.
 For node v0.8.x the user-land copy [`readable-stream`][readable-stream] is used.
 For all other node versions greater v0.8.x the built-in `stream` module is used.
@@ -14,15 +21,15 @@ For all other node versions greater v0.8.x the built-in `stream` module is used.
 <!-- !toc (minlevel=2 omit="Table of Contents") -->
 
 * [Interface](#interface)
-  * [Split([options])](#split-options-)
-  * [SplitLine([options])](#splitline-options-)
-  * [JsonArray([options])](#jsonarray-options-)
-  * [JsonArray.parse([options])](#jsonarray-parse-options-)
-  * [JsonArray.stringify([options])](#jsonarray-stringify-options-)
-  * [ReadArray([options], array)](#readarray-options-array-)
-  * [ReadArray.obj([options], array)](#readarray-obj-options-array-)
-  * [WriteArray([options], callback)](#writearray-options-callback-)
-  * [WriteArray.obj([options], callback)](#writearray-obj-options-callback-)
+  * [Split([options])](#splitoptions)
+  * [SplitLine([options])](#splitlineoptions)
+  * [JsonArray([options])](#jsonarrayoptions)
+  * [JsonArray.parse([options])](#jsonarrayparseoptions)
+  * [JsonArray.stringify([options])](#jsonarraystringifyoptions)
+  * [ReadArray([options], array)](#readarrayoptions-array)
+  * [ReadArray.obj([options], array)](#readarrayobjoptions-array)
+  * [WriteArray([options], callback)](#writearrayoptions-callback)
+  * [WriteArray.obj([options], callback)](#writearrayobjoptions-callback)
   * [Through](#through)
 * [Contribution and License Agreement](#contribution-and-license-agreement)
 * [License](#license)
@@ -71,6 +78,8 @@ node examples/split.js
 
 > Split a stream by a single char
 
+Works on buffers - should therefore be faster than `Split`.
+
 **Parameters:**
 
 - `{Object} [options]` : Stream Options `{ encoding, highWaterMark, ...}`
@@ -118,6 +127,8 @@ NOTE: Requires that the stream is split beforehand using `Split` or `SplitLine`.
 
 - `{Object} [options]` : Options
 - `{Boolean} options.stringify` : Transforms an object into a string using JSON.stringify. Default=false.
+- `{Boolean} options.error` : Emit parsing errors as `Error` objects. Default=false.
+- `{Boolean} options.validJson` : Write out a valid json file, which can be parsed as a whole. Default=true.
 
 **Return:**
 
@@ -130,7 +141,7 @@ NOTE: Requires that the stream is split beforehand using `Split` or `SplitLine`.
 **Parameters:**
 
 - `{Object} [options]` : Options
-
+- `{Boolean} options.error` : Emit parsing errors as `Error` objects. Default=false.
 **Return:**
 
 `{Transform}` A transform stream
@@ -142,6 +153,7 @@ NOTE: Requires that the stream is split beforehand using `Split` or `SplitLine`.
 **Parameters:**
 
 - `{Object} [options]` : Options
+- `{Boolean} options.validJson` : Write out a valid json file, which can be parsed as a whole. Default=true.
 
 **Return:**
 
@@ -169,6 +181,8 @@ node examples/jsonarray.js
 ### ReadArray([options], array)
 
 > Read from an Array and push into stream.
+
+Takes care on pausing to push to the stream if pipe is saturated.
 
 **Parameters:**
 
