@@ -60,8 +60,7 @@ describe('#JsonArray', function(){
 			.pipe(Through.obj(
 				function transform(obj) {
 					if (obj instanceof Error) {
-						//~ console.error(obj.message);
-						errs.push(obj.message);
+						errs.push(obj);
 					}
 					else {
 						this.push(obj);
@@ -77,7 +76,8 @@ describe('#JsonArray', function(){
 				function flush() {
 					assert.equal(cnt, 5);
 					assert.equal(errs.length, 1);
-					assert.equal(errs[0], 'error parsing: "Bad line" : SyntaxError: Unexpected token B');
+					assert.equal(errs[0].message, 'Unexpected token B');
+					assert.equal(errs[0].line, 2);
 					assert.deepEqual(last, {"5":{"five":{"cinco":5}}});
 					done();
 				}
@@ -106,7 +106,7 @@ describe('#JsonArray', function(){
 						'{"3":{"three":{"tres":3}}},\n'+
 						'{"4":{"four":{"cuatro":4}}},\n'+
 						'{"5":{"five":{"cinco":5}}}\n'+
-						']'
+						']\n'
 					);
 					done();
 				}
@@ -114,5 +114,32 @@ describe('#JsonArray', function(){
 			.pipe(ws);
 	});
 
+	it('parse and stringify JsonArray - do not output a valid JSON file', function(done){
+		var all = '',
+			rs = fs.createReadStream(__dirname + '/test.json'),
+			ws = fs.createWriteStream(__dirname + '/out-stringify.json');
+
+		rs
+			.pipe(SplitLine({chomp: true}))
+			.pipe(JsonArray.parse())
+			.pipe(JsonArray.stringify({validJson: false}))
+			.pipe(Through(
+				function transform(line) {
+					all += line.toString();
+					this.push(line);
+				},
+				function flush() {
+					assert.equal(all,
+						'{"1":{"one":{"uno":1}}}\n'+
+						'{"2":{"two":{"dos":2}}}\n'+
+						'{"3":{"three":{"tres":3}}}\n'+
+						'{"4":{"four":{"cuatro":4}}}\n'+
+						'{"5":{"five":{"cinco":5}}}\n'
+					);
+					done();
+				}
+			))
+			.pipe(ws);
+	});
 
 });
