@@ -1,7 +1,7 @@
 {
   "name": "streamss",
   "description": "stream2 event streams",
-  "version": "0.1.1",
+  "version": "0.1.2-0",
   "main": "index.js",
   "engines": {
     "node": ">=0.8.0"
@@ -10,15 +10,17 @@
     "test": "test"
   },
   "dependencies": {
+    "streamss-shim": "~0.0.1",
     "streamss-through": "~0.1.0",
-    "streamss-shim": "~0.0.1"
+    "underscore": "^1.7.0"
   },
   "devDependencies": {
     "mocha": "~2.0.1"
   },
   "scripts": {
     "test": "mocha test/*.mocha.js",
-    "lint": "jshint *.js */*.js"
+    "lint": "jshint *.js */*.js",
+    "doc": "jsdoc -d doc -c doc/conf.json index.js lib/*.js"
   },
   "repository": {
     "type": "git",

@@ -281,6 +281,10 @@ If you contribute code to this project, you are implicitly allowing your code
 to be distributed under the MIT license. You are also implicitly verifying that
 all code is your original work.
 
+* `npm test` : Run tests
+* `npm run lint` : Linting the source
+* `npm run doc` : Generate documentation from source - requires `npm i -g jsdoc`
+
 ## License
 
 Copyright (c) 2014-, Commenthol. (MIT License)
