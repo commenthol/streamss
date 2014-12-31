@@ -1,5 +1,5 @@
 /**
- * @copyright (c) 2014- commenthol
+ * @copyright 2014- commenthol
  * @licence MIT
  */
 
@@ -30,24 +30,24 @@ describe('#Split', function(){
 			rs = fs.createReadStream(__dirname + '/test.txt', { encoding: 'utf8', highWaterMark: 42 });
 
 		rs
-			.pipe(Split())
-			.pipe(Through(
-				function transform(chunk) {
-					//~ console.log('>>', cnt, JSON.stringify(chunk.toString()));
-					last = chunk;
-					this.push(chunk);
-					cnt++;
-				},
-				function flush() {
-				}
-			))
-			.pipe(fs.createWriteStream(__dirname + '/out.txt'))
-			.on('close', function (){
-				last = last.toString();
-				assert.equal(last.indexOf('いてより深くに入ります。'), last.length-12); 
-				assert.equal(cnt, 35);
-				testDone();
-			});
+		.pipe(Split())
+		.pipe(Through(
+			function transform(chunk) {
+				//~ console.log('>>', cnt, JSON.stringify(chunk.toString()));
+				last = chunk;
+				this.push(chunk);
+				cnt++;
+			},
+			function flush() {
+			}
+		))
+		.pipe(fs.createWriteStream(__dirname + '/out.txt'))
+		.on('close', function (){
+			last = last.toString();
+			assert.equal(last.indexOf('いてより深くに入ります。'), last.length-12);
+			assert.equal(cnt, 35);
+			testDone();
+		});
 	});
 
 	it('count lines in chomp mode', function(done){
@@ -56,20 +56,20 @@ describe('#Split', function(){
 			rs = fs.createReadStream(__dirname + '/test.txt', { encoding: 'utf8' });
 
 		rs
-			.pipe(Split({ matcher: /\r?\n/ }))
-			.pipe(Through(
-				function transform(chunk) {
-					//~ console.log('>>', cnt, JSON.stringify(chunk.toString()));
-					last = chunk;
-					cnt++;
-				},
-				function flush() {
-					last = last.toString();
-					assert.equal(last.indexOf('いてより深くに入ります。'), last.length-12); 
-					assert.equal(cnt, 13);
-					done();
-				}
-			));
+		.pipe(Split({ matcher: /\r?\n/ }))
+		.pipe(Through(
+			function transform(chunk) {
+				//~ console.log('>>', cnt, JSON.stringify(chunk.toString()));
+				last = chunk;
+				cnt++;
+			},
+			function flush() {
+				last = last.toString();
+				assert.equal(last.indexOf('いてより深くに入ります。'), last.length-12);
+				assert.equal(cnt, 13);
+				done();
+			}
+		));
 	});
 
 	it('split lines by "is"', function(done){
@@ -78,20 +78,19 @@ describe('#Split', function(){
 			rs = fs.createReadStream(__dirname + '/test.txt', { encoding: 'utf8' });
 
 		rs
-			.pipe(Split({ matcher: /(is)/ }))
-			.pipe(Through(
-				function transform(chunk) {
-					//~ console.log('>>', cnt, JSON.stringify(chunk.toString()));
-					last = chunk;
-					cnt++;
-				},
-				function flush() {
-					last = last.toString();
-					assert.equal(last.indexOf('いてより深くに入ります。'), last.length-12); 
-					assert.equal(cnt, 17);
-					done();
-				}
-			));
+		.pipe(Split({ matcher: /(is)/ }))
+		.pipe(Through(
+			function transform(chunk) {
+				//~ console.log('>>', cnt, JSON.stringify(chunk.toString()));
+				last = chunk;
+				cnt++;
+			},
+			function flush() {
+				last = last.toString();
+				assert.equal(last.indexOf('いてより深くに入ります。'), last.length-12);
+				assert.equal(cnt, 17);
+				done();
+			}
+		));
 	});
-
 });

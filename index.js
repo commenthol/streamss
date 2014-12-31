@@ -2,6 +2,7 @@
 
 module.exports = {
 	ReadArray:  require('./lib/readarray'),
+	ReadBuffer: require('./lib/readbuffer'),
 	WriteArray: require('./lib/writearray'),
 	Through:    require('streamss-through'),
 	Split:      require('./lib/split'),
