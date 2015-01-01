@@ -26,6 +26,20 @@ describe('#WriteArray', function(){
 		assert.ok(writeArray instanceof WriteArray);
 	});
 
+	it('read and write array of buffers', function(testDone){
+		var array = [ "0","1","2","3","4","5","6" ];
+
+		ReadArray(
+			array.slice()
+		)
+		.pipe(WriteArray(
+			function(err, data){
+				assert.equal(data.length, array.length);
+				testDone();
+			})
+		);
+	});
+
 	it('read and write array of strings', function(testDone){
 		var array = [ "0","1","2","3","4","5","6" ];
 

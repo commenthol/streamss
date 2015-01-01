@@ -78,7 +78,7 @@ describe('#Split', function(){
 			rs = fs.createReadStream(__dirname + '/test.txt', { encoding: 'utf8' });
 
 		rs
-		.pipe(Split({ matcher: /(is)/ }))
+		.pipe(Split(/(is)/))
 		.pipe(Through(
 			function transform(chunk) {
 				//~ console.log('>>', cnt, JSON.stringify(chunk.toString()));
