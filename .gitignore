@@ -1,6 +1,6 @@
 /node_modules
-/test/out.txt
-/test/out-stringify.json
+/test/fixtures/out.*
+/coverage
 /doc
 *.log
 *.tgz

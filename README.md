@@ -9,7 +9,8 @@ A stream2 collection for common stream use-cases.
 
 * Split, SplitLine : (Transform) Splits up a stream into pieces
 * JsonArray : (Transform) Json parse a line into an object stream and/or stringify back into a single line.
-* ReadArray : (Readable) Writes an Array as stream chunks
+* ReadArray : (Readable) Read from an Array and push it as stream.
+* ReadBuffer : (Readable) Read from an Buffer/ String and push it as stream
 * WriteArray : (Writable) Collects stream chunks into Array
 
 Works with node v0.8.x and greater.
@@ -318,9 +319,10 @@ If you contribute code to this project, you are implicitly allowing your code
 to be distributed under the MIT license. You are also implicitly verifying that
 all code is your original work.
 
-* `npm test` - Run tests
-* `npm run lint` - Linting the source
-* `npm run doc` - Generate documentation from source - requires `npm i -g jsdoc`
+* `npm test`      - Run tests
+* `npm run lint`  - Linting the source
+* `npm run cover` - Linting the source
+* `npm run doc`   - Generate documentation from source
 
 ## License
 
