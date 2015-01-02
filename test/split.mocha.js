@@ -27,7 +27,7 @@ describe('#Split', function(){
 	it('count lines', function(testDone){
 		var cnt = 0,
 			last,
-			rs = fs.createReadStream(__dirname + '/test.txt', { encoding: 'utf8', highWaterMark: 42 });
+			rs = fs.createReadStream(__dirname + '/fixtures/test.txt', { encoding: 'utf8', highWaterMark: 42 });
 
 		rs
 		.pipe(Split())
@@ -41,7 +41,7 @@ describe('#Split', function(){
 			function flush() {
 			}
 		))
-		.pipe(fs.createWriteStream(__dirname + '/out.txt'))
+		.pipe(fs.createWriteStream(__dirname + '/fixtures/out.txt'))
 		.on('close', function (){
 			last = last.toString();
 			assert.equal(last.indexOf('いてより深くに入ります。'), last.length-12);
@@ -53,7 +53,7 @@ describe('#Split', function(){
 	it('count lines in chomp mode', function(done){
 		var cnt = 0,
 			last,
-			rs = fs.createReadStream(__dirname + '/test.txt', { encoding: 'utf8' });
+			rs = fs.createReadStream(__dirname + '/fixtures/test.txt', { encoding: 'utf8' });
 
 		rs
 		.pipe(Split({ matcher: /\r?\n/ }))
@@ -75,7 +75,7 @@ describe('#Split', function(){
 	it('split lines by "is"', function(done){
 		var cnt = 0,
 			last,
-			rs = fs.createReadStream(__dirname + '/test.txt', { encoding: 'utf8' });
+			rs = fs.createReadStream(__dirname + '/fixtures/test.txt', { encoding: 'utf8' });
 
 		rs
 		.pipe(Split(/(is)/))

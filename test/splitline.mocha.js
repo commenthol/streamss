@@ -12,7 +12,7 @@ var fs = require('fs'),
 	SplitLine = require('..').SplitLine,
 	Through = require('..').Through;
 
-var testTxt = __dirname + '/test.txt';
+var testTxt = __dirname + '/fixtures/test.txt';
 
 describe('#SplitLine', function(){
 

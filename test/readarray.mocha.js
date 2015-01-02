@@ -58,7 +58,7 @@ describe('#ReadArray', function(){
 	});
 
 	it('sort text by lines', function(done){
-		var rs = fs.createReadStream(__dirname + '/test.txt'),
+		var rs = fs.createReadStream(__dirname + '/fixtures/test.txt'),
 			array = [],
 			cnt = 0;
 

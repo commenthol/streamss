@@ -28,7 +28,7 @@ describe('#JsonArray', function(){
 	it('parse JsonArray', function(done){
 		var cnt = 0,
 			last,
-			rs = fs.createReadStream(__dirname + '/test.json');
+			rs = fs.createReadStream(__dirname + '/fixtures/test.json');
 
 		rs
 		.pipe(SplitLine({chomp: true}))
@@ -52,7 +52,7 @@ describe('#JsonArray', function(){
 		var cnt = 0,
 			last,
 			errs = [],
-			rs = fs.createReadStream(__dirname + '/test.json');
+			rs = fs.createReadStream(__dirname + '/fixtures/test.json');
 
 		rs
 		.pipe(SplitLine({chomp: true}))
@@ -86,8 +86,8 @@ describe('#JsonArray', function(){
 
 	it('parse and stringify JsonArray', function(done){
 		var all = '',
-			rs = fs.createReadStream(__dirname + '/test.json'),
-			ws = fs.createWriteStream(__dirname + '/out-stringify.json');
+			rs = fs.createReadStream(__dirname + '/fixtures/test.json'),
+			ws = fs.createWriteStream(__dirname + '/fixtures/out.stringify.json');
 
 		rs
 		.pipe(SplitLine({chomp: true}))
@@ -116,8 +116,8 @@ describe('#JsonArray', function(){
 
 	it('parse and stringify JsonArray - do not output a valid JSON file', function(done){
 		var all = '',
-			rs = fs.createReadStream(__dirname + '/test.json'),
-			ws = fs.createWriteStream(__dirname + '/out-stringify.json');
+			rs = fs.createReadStream(__dirname + '/fixtures/test.json'),
+			ws = fs.createWriteStream(__dirname + '/fixtures/out.stringify.json');
 
 		rs
 		.pipe(SplitLine({chomp: true}))
