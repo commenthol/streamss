@@ -10,6 +10,7 @@
 var fs = require('fs'),
 	assert = require('assert'),
 	SplitLine = require('..').SplitLine,
+	ReadBuffer = require('..').ReadBuffer,
 	Through = require('..').Through,
 	JsonArray = require('..').JsonArray;
 
@@ -23,6 +24,21 @@ describe('#JsonArray', function(){
 	it('without new operator', function(){
 		var jsonArray = JsonArray();
 		assert.ok(jsonArray instanceof JsonArray);
+	});
+
+	it('parse empty stream', function(done){
+		var rs = ReadBuffer('[\n\n]'),
+			jsonArray = JsonArray();
+		rs
+		.pipe(SplitLine())
+		.pipe(JsonArray())
+		.pipe(Through.obj(
+			function transform(obj) {
+			},
+			function flush() {
+				done();
+			}
+		));
 	});
 
 	it('parse JsonArray', function(done){
