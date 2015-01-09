@@ -2,7 +2,7 @@
 
 > A stream2 collection.
 
-![NPM version](https://badge.fury.io/js/streamss.svg)
+[![NPM version](https://badge.fury.io/js/streamss.svg)](https://www.npmjs.com/package/streamss/)
 [![Build Status](https://secure.travis-ci.org/commenthol/streamss.svg?branch=master)](https://travis-ci.org/commenthol/streamss)
 
 A stream2 collection for common stream use-cases.
@@ -14,7 +14,7 @@ A stream2 collection for common stream use-cases.
 * WriteArray : (Writable) Collects stream chunks into Array
 
 Works with node v0.8.x and greater.
-For node v0.8.x the user-land copy [`readable-stream`][readable-stream] is used.
+For node v0.8.x the user-land copy [readable-stream][] is used.
 For all other node versions greater v0.8.x the built-in `stream` module is used.
 
 ## Table of Contents
@@ -321,12 +321,12 @@ all code is your original work.
 
 * `npm test`      - Run tests
 * `npm run lint`  - Linting the source
-* `npm run cover` - Linting the source
+* `npm run cover` - Run istanbul code coverage
 * `npm run doc`   - Generate documentation from source
 
 ## License
 
-Copyright (c) 2014-, Commenthol. (MIT License)
+Copyright (c) 2014-2015, Commenthol. (MIT License)
 
 See [LICENSE][] for more info.
 
