@@ -33,24 +33,24 @@ describe('#Split', function () {
     })
 
     rs
-    .pipe(Split())
-    .pipe(Through(
-      function transform (chunk) {
+      .pipe(Split())
+      .pipe(Through(
+        function transform (chunk) {
         // ~ console.log('>>', cnt, JSON.stringify(chunk.toString()));
-        last = chunk
-        this.push(chunk)
-        cnt++
-      },
-      function flush () {
-      }
-    ))
-    .pipe(fs.createWriteStream(path.resolve(__dirname, 'fixtures/out.txt')))
-    .on('close', function () {
-      last = last.toString()
-      assert.equal(last.indexOf('いてより深くに入ります。'), last.length - 12)
-      assert.equal(cnt, 35)
-      testDone()
-    })
+          last = chunk
+          this.push(chunk)
+          cnt++
+        },
+        function flush () {
+        }
+      ))
+      .pipe(fs.createWriteStream(path.resolve(__dirname, 'fixtures/out.txt')))
+      .on('close', function () {
+        last = last.toString()
+        assert.equal(last.indexOf('いてより深くに入ります。'), last.length - 12)
+        assert.equal(cnt, 35)
+        testDone()
+      })
   })
 
   it('count lines in chomp mode', function (done) {
@@ -61,20 +61,20 @@ describe('#Split', function () {
     })
 
     rs
-    .pipe(Split({ matcher: /\r?\n/ }))
-    .pipe(Through(
-      function transform (chunk) {
+      .pipe(Split({ matcher: /\r?\n/ }))
+      .pipe(Through(
+        function transform (chunk) {
         // ~ console.log('>>', cnt, JSON.stringify(chunk.toString()));
-        last = chunk
-        cnt++
-      },
-      function flush () {
-        last = last.toString()
-        assert.equal(last.indexOf('いてより深くに入ります。'), last.length - 12)
-        assert.equal(cnt, 13)
-        done()
-      }
-    ))
+          last = chunk
+          cnt++
+        },
+        function flush () {
+          last = last.toString()
+          assert.equal(last.indexOf('いてより深くに入ります。'), last.length - 12)
+          assert.equal(cnt, 13)
+          done()
+        }
+      ))
   })
 
   it('split lines by "is"', function (done) {
@@ -85,19 +85,19 @@ describe('#Split', function () {
     })
 
     rs
-    .pipe(Split(/(is)/))
-    .pipe(Through(
-      function transform (chunk) {
+      .pipe(Split(/(is)/))
+      .pipe(Through(
+        function transform (chunk) {
         // ~ console.log('>>', cnt, JSON.stringify(chunk.toString()));
-        last = chunk
-        cnt++
-      },
-      function flush () {
-        last = last.toString()
-        assert.equal(last.indexOf('いてより深くに入ります。'), last.length - 12)
-        assert.equal(cnt, 17)
-        done()
-      }
-    ))
+          last = chunk
+          cnt++
+        },
+        function flush () {
+          last = last.toString()
+          assert.equal(last.indexOf('いてより深くに入ります。'), last.length - 12)
+          assert.equal(cnt, 17)
+          done()
+        }
+      ))
   })
 })

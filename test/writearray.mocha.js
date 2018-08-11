@@ -29,13 +29,13 @@ describe('#WriteArray', function () {
     ReadArray(
       array.slice()
     )
-    .pipe(WriteArray(
-      function (err, data) {
-        assert.ok(!err, '' + err)
-        assert.equal(data.length, array.length)
-        testDone()
-      })
-    )
+      .pipe(WriteArray(
+        function (err, data) {
+          assert.ok(!err, '' + err)
+          assert.equal(data.length, array.length)
+          testDone()
+        })
+      )
   })
 
   it('read and write array of strings', function (testDone) {
@@ -45,15 +45,15 @@ describe('#WriteArray', function () {
       { encoding: 'utf8' },
       array.slice()
     )
-    .pipe(WriteArray(
-      { decodeStrings: false },
-      function (err, data) {
+      .pipe(WriteArray(
+        { decodeStrings: false },
+        function (err, data) {
         // ~ console.log(data);
-        assert.ok(!err, '' + err)
-        assert.equal(data.length, array.length)
-        testDone()
-      })
-    )
+          assert.ok(!err, '' + err)
+          assert.equal(data.length, array.length)
+          testDone()
+        })
+      )
   })
 
   it('read and write array of objects', function (testDone) {
@@ -62,14 +62,14 @@ describe('#WriteArray', function () {
     ReadArray.obj(
       array.slice()
     )
-    .pipe(WriteArray.obj(
-      function (err, data) {
+      .pipe(WriteArray.obj(
+        function (err, data) {
         // ~ console.log(data);
-        assert.ok(!err, '' + err)
-        assert.deepEqual(data, array)
-        testDone()
-      })
-    )
+          assert.ok(!err, '' + err)
+          assert.deepEqual(data, array)
+          testDone()
+        })
+      )
   })
 
   it('read and write array of objects throws error', function (testDone) {
@@ -78,27 +78,27 @@ describe('#WriteArray', function () {
     ReadArray.obj(
       array.slice()
     )
-    .pipe(Through.obj(
-      function (data) {
-        this.push(data)
-        // ~ console.log(data)
-        if (data === 5) {
-          this.emit('error', new Error('bamm'))
+      .pipe(Through.obj(
+        function (data) {
+          this.push(data)
+          // ~ console.log(data)
+          if (data === 5) {
+            this.emit('error', new Error('bamm'))
+          }
         }
-      }
-    ))
-    .pipe(Through.obj(
-      { passError: true },
-      function (data) {
-        this.push(data)
-      }
-    ))
-    .pipe(WriteArray.obj(
-      function (err, data) {
+      ))
+      .pipe(Through.obj(
+        { passError: true },
+        function (data) {
+          this.push(data)
+        }
+      ))
+      .pipe(WriteArray.obj(
+        function (err, data) {
         // ~ console.log(err, data);
-        assert.equal(err.message, 'bamm')
-        testDone()
-      })
-    )
+          assert.equal(err.message, 'bamm')
+          testDone()
+        })
+      )
   })
 })

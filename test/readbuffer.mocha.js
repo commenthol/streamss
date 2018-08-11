@@ -47,7 +47,7 @@ describe('#ReadBuffer', function () {
 
     ReadBuffer(
       { highWaterMark: 5 },
-      new Buffer(buffer)
+      Buffer.from(buffer)
     ).pipe(Through(
       function transform (chunk) {
         assert.ok(chunk instanceof Buffer)
@@ -81,7 +81,7 @@ describe('#ReadBuffer', function () {
     var buffer = 'abcd efgh ijkl mnop '
 
     ReadBuffer(
-      new Buffer(buffer)
+      Buffer.from(buffer)
     ).pipe(Through(
       function transform (chunk) {
         assert.ok(chunk instanceof Buffer)

@@ -1,44 +1,36 @@
 {
   "name": "streamss",
+  "version": "1.0.0-0",
   "description": "stream2 event streams",
-  "version": "0.2.5",
-  "main": "index.js",
-  "engines": {
-    "node": ">=0.8.0"
+  "keywords": [
+    "event-streams",
+    "stream2"
+  ],
+  "homepage": "https://github.com/commenthol/streamss",
+  "bugs": {
+    "url": "https://github.com/commenthol/streamss/issues"
   },
   "repository": {
     "type": "git",
     "url": "github.com/commenthol/streamss"
   },
-  "keywords": [
-    "stream2",
-    "event-streams"
-  ],
-  "author": "commenthol <commenthol@gmail.com>",
-  "maintainers": "commenthol <commenthol@gmail.com>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/commenthol/streamss/issues"
-  },
-  "homepage": "https://github.com/commenthol/streamss",
+  "author": "commenthol <commenthol@gmail.com>",
+  "main": "index.js",
   "directories": {
+    "lib": "lib",
+    "example": "examples",
     "test": "test"
   },
   "scripts": {
-    "test": "mocha test/*.mocha.js",
-    "cover": "istanbul cover _mocha --report lcov --report text -- -R dot --check-leaks test/*.mocha.js",
-    "lint": "eslint '**/*.js'",
+    "all": "npm run clean && npm run test",
+    "clean": "rimraf doc coverage",
+    "clean:all": "npm run clean && rimraf node_modules *.tgz",
+    "coverage": "nyc -r text -r html npm test",
     "doc": "jsdoc -d doc -c jsdoc.json index.js lib/*.js",
-    "clean": "rimraf doc coverage"
-  },
-  "dependencies": {
-    "streamss-shim": "~0.0.2",
-    "streamss-through": "~0.2.1",
-    "underscore": "~1.8.3"
-  },
-  "devDependencies": {
-    "mocha": "^3.2.0",
-    "rimraf": "^2.5.4"
+    "lint": "eslint '**/*.js'",
+    "prepublishOnly": "npm run all",
+    "test": "mocha"
   },
   "eslintConfig": {
     "extends": "standard",
@@ -48,5 +40,25 @@
     "rules": {
       "key-spacing": 0
     }
-  }
+  },
+  "dependencies": {
+    "lodash.omit": "^4.5.0",
+    "streamss-through": "^1.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.3.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "mocha": "^5.2.0",
+    "rimraf": "^2.5.4"
+  },
+  "engines": {
+    "node": ">=4.5.0"
+  },
+  "maintainers": [
+    "commenthol <commenthol@gmail.com>"
+  ]
 }

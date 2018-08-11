@@ -1,7 +1,11 @@
 /node_modules/
 /test/fixtures/out.*
+/examples
 /coverage
+/test
 /doc
+jsdoc.json
+Makefile
 .*
 *.log
 *.tgz

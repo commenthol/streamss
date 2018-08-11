@@ -31,17 +31,17 @@ describe('#SplitLine', function () {
     var rs = fs.createReadStream(testTxt, { encoding: 'utf8', highWaterMark: 42 })
 
     rs
-    .pipe(SplitLine())
-    .pipe(Through(
-      function transform (chunk) {
+      .pipe(SplitLine())
+      .pipe(Through(
+        function transform (chunk) {
         // ~ console.log('>>', cnt, JSON.stringify(chunk.toString()));
-        cnt++
-      },
-      function flush () {
-        assert.equal(cnt, 23)
-        done()
-      }
-    ))
+          cnt++
+        },
+        function flush () {
+          assert.equal(cnt, 23)
+          done()
+        }
+      ))
   })
 
   it('count lines in chomp mode', function (done) {
@@ -49,17 +49,17 @@ describe('#SplitLine', function () {
     var rs = fs.createReadStream(testTxt, { encoding: 'utf8' })
 
     rs
-    .pipe(SplitLine({chomp: true}))
-    .pipe(Through(
-      function transform (chunk) {
+      .pipe(SplitLine({chomp: true}))
+      .pipe(Through(
+        function transform (chunk) {
         // ~ console.log('>>', cnt, JSON.stringify(chunk.toString()));
-        cnt++
-      },
-      function flush () {
-        assert.equal(cnt, 13)
-        done()
-      }
-    ))
+          cnt++
+        },
+        function flush () {
+          assert.equal(cnt, 13)
+          done()
+        }
+      ))
   })
 
   it('split by "i"', function (done) {
@@ -67,17 +67,17 @@ describe('#SplitLine', function () {
     var rs = fs.createReadStream(testTxt, { encoding: 'utf8' })
 
     rs
-    .pipe(SplitLine({matcher: 'i--'}))
-    .pipe(Through(
-      function transform (chunk) {
+      .pipe(SplitLine({matcher: 'i--'}))
+      .pipe(Through(
+        function transform (chunk) {
         // ~ console.log('>>', cnt, JSON.stringify(chunk.toString()));
-        cnt++
-      },
-      function flush () {
-        assert.equal(cnt, 48)
-        done()
-      }
-    ))
+          cnt++
+        },
+        function flush () {
+          assert.equal(cnt, 48)
+          done()
+        }
+      ))
   })
 
   it('split by charCode 65', function (done) {
@@ -85,16 +85,16 @@ describe('#SplitLine', function () {
     var rs = fs.createReadStream(testTxt, { encoding: 'utf8' })
 
     rs
-    .pipe(SplitLine({matcher: 97}))
-    .pipe(Through(
-      function transform (chunk) {
+      .pipe(SplitLine({matcher: 97}))
+      .pipe(Through(
+        function transform (chunk) {
         // ~ console.log('>>', cnt, JSON.stringify(chunk.toString()));
-        cnt++
-      },
-      function flush () {
-        assert.equal(cnt, 69)
-        done()
-      }
-    ))
+          cnt++
+        },
+        function flush () {
+          assert.equal(cnt, 69)
+          done()
+        }
+      ))
   })
 })

@@ -7,9 +7,9 @@ var array = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '10' ]
 var cnt = 0
 
 ReadArray(
-    {encoding: 'utf8'},
-    array
-  )
+  {encoding: 'utf8'},
+  array
+)
   .pipe(Through(
     {encoding: 'utf8'},
     function (str) {

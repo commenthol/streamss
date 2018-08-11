@@ -30,15 +30,15 @@ describe('#ReadArray', function () {
     var cnt = 0
 
     ReadArray(array.slice())
-    .pipe(Through(
-      function transform (chunk) {
-        cnt++
-      },
-      function flush () {
-        assert.equal(cnt, array.length)
-        done()
-      })
-    )
+      .pipe(Through(
+        function transform (chunk) {
+          cnt++
+        },
+        function flush () {
+          assert.equal(cnt, array.length)
+          done()
+        })
+      )
   })
 
   it('count length of array of objects', function (done) {
@@ -46,15 +46,15 @@ describe('#ReadArray', function () {
     var cnt = 0
 
     ReadArray.obj(array.slice())
-    .pipe(Through.obj(
-      function transform (chunk) {
-        cnt++
-      },
-      function flush () {
-        assert.equal(cnt, array.length)
-        done()
-      })
-    )
+      .pipe(Through.obj(
+        function transform (chunk) {
+          cnt++
+        },
+        function flush () {
+          assert.equal(cnt, array.length)
+          done()
+        })
+      )
   })
 
   it('sort text by lines', function (done) {
@@ -63,24 +63,24 @@ describe('#ReadArray', function () {
     var cnt = 0
 
     rs
-    .pipe(SplitLine())
-    .pipe(Through(
-      function transform (chunk) {
-        array.push(chunk.toString())
-      },
-      function flush () {
-        ReadArray(array.sort().slice())
-        .pipe(Through(
-          function transform (chunk) {
-            cnt++
-            assert.equal(chunk instanceof Buffer, true)
-          },
-          function flush () {
-            assert.equal(cnt, array.length)
-            done()
-          })
-        )
-      })
-    )
+      .pipe(SplitLine())
+      .pipe(Through(
+        function transform (chunk) {
+          array.push(chunk.toString())
+        },
+        function flush () {
+          ReadArray(array.sort().slice())
+            .pipe(Through(
+              function transform (chunk) {
+                cnt++
+                assert.equal(chunk instanceof Buffer, true)
+              },
+              function flush () {
+                assert.equal(cnt, array.length)
+                done()
+              })
+            )
+        })
+      )
   })
 })
