@@ -1,8 +1,7 @@
-var path = require('path')
-var SplitLine = require('..').SplitLine
-var Through = require('..').Through
+const { resolve } = require('path')
+const { SplitLine, Through } = require('..')
 
-require('fs').createReadStream(path.resolve(__dirname, '../test/test.txt'))
+require('fs').createReadStream(resolve(__dirname, '../test/test.txt'))
   .pipe(SplitLine({ matcher: 'i', chomp: true, encoding: 'utf8' }))
   .pipe(Through(
     { decodeStrings: false },

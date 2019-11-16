@@ -7,27 +7,24 @@
 
 /* global describe, it */
 
-var fs = require('fs')
-var path = require('path')
-var assert = require('assert')
-var SplitLine = require('..').SplitLine
-var ReadBuffer = require('..').ReadBuffer
-var Through = require('..').Through
-var JsonArray = require('..').JsonArray
+const fs = require('fs')
+const path = require('path')
+const assert = require('assert')
+const { SplitLine, ReadBuffer, Through, JsonArray } = require('..')
 
 describe('#JsonArray', function () {
   it('with new operator', function () {
-    var jsonArray = new JsonArray()
+    const jsonArray = new JsonArray()
     assert.ok(jsonArray instanceof JsonArray)
   })
 
   it('without new operator', function () {
-    var jsonArray = JsonArray()
+    const jsonArray = JsonArray()
     assert.ok(jsonArray instanceof JsonArray)
   })
 
   it('parse empty stream', function (done) {
-    var rs = ReadBuffer('[\n\n]')
+    const rs = ReadBuffer('[\n\n]')
     rs
       .pipe(SplitLine())
       .pipe(JsonArray())
@@ -40,37 +37,37 @@ describe('#JsonArray', function () {
   })
 
   it('parse JsonArray', function (done) {
-    var cnt = 0
-    var last
-    var rs = fs.createReadStream(path.resolve(__dirname, 'fixtures/test.json'))
+    let cnt = 0
+    let last
+    const rs = fs.createReadStream(path.resolve(__dirname, 'fixtures/test.json'))
 
     rs
-      .pipe(SplitLine({chomp: true}))
+      .pipe(SplitLine({ chomp: true }))
       .pipe(JsonArray())
       .pipe(Through.obj(
         function transform (obj) {
         // ~ console.log(obj)
           last = obj
           cnt++
-          assert.equal(typeof obj[cnt], 'object')
+          assert.strictEqual(typeof obj[cnt], 'object')
         },
         function flush () {
-          assert.equal(cnt, 5)
-          assert.deepEqual(last, {'5': {'five': {'cinco': 5}}})
+          assert.strictEqual(cnt, 5)
+          assert.deepStrictEqual(last, { 5: { five: { cinco: 5 } } })
           done()
         }
       ))
   })
 
   it('parse JsonArray and show errors', function (done) {
-    var cnt = 0
-    var last
-    var errs = []
-    var rs = fs.createReadStream(path.resolve(__dirname, 'fixtures/test.json'))
+    let cnt = 0
+    let last
+    const errs = []
+    const rs = fs.createReadStream(path.resolve(__dirname, 'fixtures/test.json'))
 
     rs
-      .pipe(SplitLine({chomp: true}))
-      .pipe(JsonArray({error: true}))
+      .pipe(SplitLine({ chomp: true }))
+      .pipe(JsonArray({ error: true }))
       .pipe(Through.obj(
         function transform (obj) {
           if (obj instanceof Error) {
@@ -84,26 +81,26 @@ describe('#JsonArray', function () {
         function transform (obj) {
           last = obj
           cnt++
-          assert.equal(typeof obj[cnt], 'object')
+          assert.strictEqual(typeof obj[cnt], 'object')
         },
         function flush () {
-          assert.equal(cnt, 5)
-          assert.equal(errs.length, 1)
+          assert.strictEqual(cnt, 5)
+          assert.strictEqual(errs.length, 1)
           assert.ok(errs[0].message.match(/Unexpected token B/))
-          assert.equal(errs[0].line, 2)
-          assert.deepEqual(last, {'5': {'five': {'cinco': 5}}})
+          assert.strictEqual(errs[0].line, 2)
+          assert.deepStrictEqual(last, { 5: { five: { cinco: 5 } } })
           done()
         }
       ))
   })
 
   it('parse and stringify JsonArray', function (done) {
-    var all = ''
-    var rs = fs.createReadStream(path.resolve(__dirname, 'fixtures/test.json'))
-    var ws = fs.createWriteStream(path.resolve(__dirname, 'fixtures/out.stringify.json'))
+    let all = ''
+    const rs = fs.createReadStream(path.resolve(__dirname, 'fixtures/test.json'))
+    const ws = fs.createWriteStream(path.resolve(__dirname, 'fixtures/out.stringify.json'))
 
     rs
-      .pipe(SplitLine({chomp: true}))
+      .pipe(SplitLine({ chomp: true }))
       .pipe(JsonArray.parse())
       .pipe(JsonArray.stringify())
       .pipe(Through(
@@ -112,7 +109,7 @@ describe('#JsonArray', function () {
           this.push(line)
         },
         function flush () {
-          assert.equal(all,
+          assert.strictEqual(all,
             '[\n' +
           '{"1":{"one":{"uno":1}}},\n' +
           '{"2":{"two":{"dos":2}}},\n' +
@@ -128,21 +125,21 @@ describe('#JsonArray', function () {
   })
 
   it('parse and stringify JsonArray - do not output a valid JSON file', function (done) {
-    var all = ''
-    var rs = fs.createReadStream(path.resolve(__dirname, 'fixtures/test.json'))
-    var ws = fs.createWriteStream(path.resolve(__dirname, 'fixtures/out.stringify.json'))
+    let all = ''
+    const rs = fs.createReadStream(path.resolve(__dirname, 'fixtures/test.json'))
+    const ws = fs.createWriteStream(path.resolve(__dirname, 'fixtures/out.stringify.json'))
 
     rs
-      .pipe(SplitLine({chomp: true}))
+      .pipe(SplitLine({ chomp: true }))
       .pipe(JsonArray.parse())
-      .pipe(JsonArray.stringify({validJson: false}))
+      .pipe(JsonArray.stringify({ validJson: false }))
       .pipe(Through(
         function transform (line) {
           all += line.toString()
           this.push(line)
         },
         function flush () {
-          assert.equal(all,
+          assert.strictEqual(all,
             '{"1":{"one":{"uno":1}}}\n' +
           '{"2":{"two":{"dos":2}}}\n' +
           '{"3":{"three":{"tres":3}}}\n' +

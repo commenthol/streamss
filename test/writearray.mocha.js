@@ -7,24 +7,22 @@
 
 /* global describe, it */
 
-var assert = require('assert')
-var Through = require('..').Through
-var ReadArray = require('..').ReadArray
-var WriteArray = require('..').WriteArray
+const assert = require('assert')
+const { ReadArray, WriteArray, Through } = require('..')
 
 describe('#WriteArray', function () {
   it('with new operator', function () {
-    var writeArray = new WriteArray()
+    const writeArray = new WriteArray()
     assert.ok(writeArray instanceof WriteArray)
   })
 
   it('without new operator', function () {
-    var writeArray = WriteArray()
+    const writeArray = WriteArray()
     assert.ok(writeArray instanceof WriteArray)
   })
 
   it('read and write array of buffers', function (testDone) {
-    var array = [ '0', '1', '2', '3', '4', '5', '6' ]
+    const array = ['0', '1', '2', '3', '4', '5', '6']
 
     ReadArray(
       array.slice()
@@ -32,14 +30,14 @@ describe('#WriteArray', function () {
       .pipe(WriteArray(
         function (err, data) {
           assert.ok(!err, '' + err)
-          assert.equal(data.length, array.length)
+          assert.strictEqual(data.length, array.length)
           testDone()
         })
       )
   })
 
   it('read and write array of strings', function (testDone) {
-    var array = [ '0', '1', '2', '3', '4', '5', '6' ]
+    const array = ['0', '1', '2', '3', '4', '5', '6']
 
     ReadArray(
       { encoding: 'utf8' },
@@ -50,14 +48,14 @@ describe('#WriteArray', function () {
         function (err, data) {
         // ~ console.log(data);
           assert.ok(!err, '' + err)
-          assert.equal(data.length, array.length)
+          assert.strictEqual(data.length, array.length)
           testDone()
         })
       )
   })
 
   it('read and write array of objects', function (testDone) {
-    var array = [ 0, 1, {two: 2}, 3, 4, 5, {six: 6} ]
+    const array = [0, 1, { two: 2 }, 3, 4, 5, { six: 6 }]
 
     ReadArray.obj(
       array.slice()
@@ -66,14 +64,14 @@ describe('#WriteArray', function () {
         function (err, data) {
         // ~ console.log(data);
           assert.ok(!err, '' + err)
-          assert.deepEqual(data, array)
+          assert.deepStrictEqual(data, array)
           testDone()
         })
       )
   })
 
   it('read and write array of objects throws error', function (testDone) {
-    var array = [ 0, 1, {two: 2}, 3, 4, 5, {six: 6} ]
+    const array = [0, 1, { two: 2 }, 3, 4, 5, { six: 6 }]
 
     ReadArray.obj(
       array.slice()
@@ -96,7 +94,7 @@ describe('#WriteArray', function () {
       .pipe(WriteArray.obj(
         function (err, data) {
         // ~ console.log(err, data);
-          assert.equal(err.message, 'bamm')
+          assert.strictEqual(err.message, 'bamm')
           testDone()
         })
       )

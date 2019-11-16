@@ -7,20 +7,19 @@
 
 /* global describe, it */
 
-var assert = require('assert')
-var Through = require('..').Through
-var ReadBuffer = require('..').ReadBuffer
+const assert = require('assert')
+const { ReadBuffer, Through } = require('..')
 
 describe('#ReadBuffer', function () {
   it('without new operator', function () {
-    var readBuffer = ReadBuffer()
+    const readBuffer = ReadBuffer()
     assert.ok(readBuffer instanceof ReadBuffer)
   })
 
   it('push string', function (done) {
-    var buffer = 'abcd efgh ijkl mnop '
-    var res = buffer.split(' ')
-    var cnt = 0
+    const buffer = 'abcd efgh ijkl mnop '
+    const res = buffer.split(' ')
+    let cnt = 0
     res.pop()
 
     ReadBuffer(
@@ -29,20 +28,20 @@ describe('#ReadBuffer', function () {
     ).pipe(Through(
       function transform (chunk) {
         assert.ok(chunk instanceof Buffer)
-        assert.equal(chunk.toString(), res[cnt] + ' ')
+        assert.strictEqual(chunk.toString(), res[cnt] + ' ')
         cnt++
       },
       function flush () {
-        assert.equal(cnt, res.length)
+        assert.strictEqual(cnt, res.length)
         done()
       })
     )
   })
 
   it('push buffer', function (done) {
-    var buffer = 'abcd efgh ijkl mnop '
-    var res = buffer.split(' ')
-    var cnt = 0
+    const buffer = 'abcd efgh ijkl mnop '
+    const res = buffer.split(' ')
+    let cnt = 0
     res.pop()
 
     ReadBuffer(
@@ -51,25 +50,25 @@ describe('#ReadBuffer', function () {
     ).pipe(Through(
       function transform (chunk) {
         assert.ok(chunk instanceof Buffer)
-        assert.equal(chunk.toString(), res[cnt] + ' ')
+        assert.strictEqual(chunk.toString(), res[cnt] + ' ')
         cnt++
       },
       function flush () {
-        assert.equal(cnt, res.length)
+        assert.strictEqual(cnt, res.length)
         done()
       })
     )
   })
 
   it('push string without options', function (done) {
-    var buffer = 'abcd efgh ijkl mnop '
+    const buffer = 'abcd efgh ijkl mnop '
 
     ReadBuffer(
       buffer
     ).pipe(Through(
       function transform (chunk) {
         assert.ok(chunk instanceof Buffer)
-        assert.equal(chunk.toString(), buffer)
+        assert.strictEqual(chunk.toString(), buffer)
       },
       function flush () {
         done()
@@ -78,14 +77,14 @@ describe('#ReadBuffer', function () {
   })
 
   it('push buffer without options', function (done) {
-    var buffer = 'abcd efgh ijkl mnop '
+    const buffer = 'abcd efgh ijkl mnop '
 
     ReadBuffer(
       Buffer.from(buffer)
     ).pipe(Through(
       function transform (chunk) {
         assert.ok(chunk instanceof Buffer)
-        assert.equal(chunk.toString(), buffer)
+        assert.strictEqual(chunk.toString(), buffer)
       },
       function flush () {
         done()

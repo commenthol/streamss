@@ -7,27 +7,26 @@
 
 /* global describe, it */
 
-var fs = require('fs')
-var path = require('path')
-var assert = require('assert')
-var Split = require('..').Split
-var Through = require('..').Through
+const fs = require('fs')
+const path = require('path')
+const assert = require('assert')
+const { Split, Through } = require('..')
 
 describe('#Split', function () {
   it('with new operator', function () {
-    var split = new Split()
+    const split = new Split()
     assert.ok(split instanceof Split)
   })
 
   it('without new operator', function () {
-    var split = Split()
+    const split = Split()
     assert.ok(split instanceof Split)
   })
 
   it('count lines', function (testDone) {
-    var cnt = 0
-    var last
-    var rs = fs.createReadStream(path.resolve(__dirname, 'fixtures/test.txt'), {
+    let cnt = 0
+    let last
+    const rs = fs.createReadStream(path.resolve(__dirname, 'fixtures/test.txt'), {
       encoding: 'utf8',
       highWaterMark: 42
     })
@@ -47,16 +46,16 @@ describe('#Split', function () {
       .pipe(fs.createWriteStream(path.resolve(__dirname, 'fixtures/out.txt')))
       .on('close', function () {
         last = last.toString()
-        assert.equal(last.indexOf('いてより深くに入ります。'), last.length - 12)
-        assert.equal(cnt, 35)
+        assert.strictEqual(last.indexOf('いてより深くに入ります。'), last.length - 12)
+        assert.strictEqual(cnt, 35)
         testDone()
       })
   })
 
   it('count lines in chomp mode', function (done) {
-    var cnt = 0
-    var last
-    var rs = fs.createReadStream(path.resolve(__dirname, 'fixtures/test.txt'), {
+    let cnt = 0
+    let last
+    const rs = fs.createReadStream(path.resolve(__dirname, 'fixtures/test.txt'), {
       encoding: 'utf8'
     })
 
@@ -70,17 +69,17 @@ describe('#Split', function () {
         },
         function flush () {
           last = last.toString()
-          assert.equal(last.indexOf('いてより深くに入ります。'), last.length - 12)
-          assert.equal(cnt, 13)
+          assert.strictEqual(last.indexOf('いてより深くに入ります。'), last.length - 12)
+          assert.strictEqual(cnt, 13)
           done()
         }
       ))
   })
 
   it('split lines by "is"', function (done) {
-    var cnt = 0
-    var last
-    var rs = fs.createReadStream(path.resolve(__dirname, 'fixtures/test.txt'), {
+    let cnt = 0
+    let last
+    const rs = fs.createReadStream(path.resolve(__dirname, 'fixtures/test.txt'), {
       encoding: 'utf8'
     })
 
@@ -94,8 +93,8 @@ describe('#Split', function () {
         },
         function flush () {
           last = last.toString()
-          assert.equal(last.indexOf('いてより深くに入ります。'), last.length - 12)
-          assert.equal(cnt, 17)
+          assert.strictEqual(last.indexOf('いてより深くに入ります。'), last.length - 12)
+          assert.strictEqual(cnt, 17)
           done()
         }
       ))
