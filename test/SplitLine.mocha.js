@@ -20,18 +20,13 @@ describe('#SplitLine', function () {
     assert.ok(split instanceof SplitLine)
   })
 
-  it('without new operator', function () {
-    const split = SplitLine()
-    assert.ok(split instanceof SplitLine)
-  })
-
   it('count lines', function (done) {
     let cnt = 0
     const rs = fs.createReadStream(testTxt, { encoding: 'utf8', highWaterMark: 42 })
 
     rs
-      .pipe(SplitLine())
-      .pipe(Through(
+      .pipe(new SplitLine())
+      .pipe(Through.through(
         function transform (chunk) {
         // ~ console.log('>>', cnt, JSON.stringify(chunk.toString()));
           cnt++
@@ -48,8 +43,8 @@ describe('#SplitLine', function () {
     const rs = fs.createReadStream(testTxt, { encoding: 'utf8' })
 
     rs
-      .pipe(SplitLine({ chomp: true }))
-      .pipe(Through(
+      .pipe(new SplitLine({ chomp: true }))
+      .pipe(Through.through(
         function transform (chunk) {
         // ~ console.log('>>', cnt, JSON.stringify(chunk.toString()));
           cnt++
@@ -66,8 +61,8 @@ describe('#SplitLine', function () {
     const rs = fs.createReadStream(testTxt, { encoding: 'utf8' })
 
     rs
-      .pipe(SplitLine({ matcher: 'i--' }))
-      .pipe(Through(
+      .pipe(new SplitLine({ matcher: 'i--' }))
+      .pipe(Through.through(
         function transform (chunk) {
         // ~ console.log('>>', cnt, JSON.stringify(chunk.toString()));
           cnt++
@@ -84,8 +79,8 @@ describe('#SplitLine', function () {
     const rs = fs.createReadStream(testTxt, { encoding: 'utf8' })
 
     rs
-      .pipe(SplitLine({ matcher: 97 }))
-      .pipe(Through(
+      .pipe(new SplitLine({ matcher: 97 }))
+      .pipe(Through.through(
         function transform (chunk) {
         // ~ console.log('>>', cnt, JSON.stringify(chunk.toString()));
           cnt++

@@ -18,17 +18,12 @@ describe('#JsonArray', function () {
     assert.ok(jsonArray instanceof JsonArray)
   })
 
-  it('without new operator', function () {
-    const jsonArray = JsonArray()
-    assert.ok(jsonArray instanceof JsonArray)
-  })
-
   it('parse empty stream', function (done) {
-    const rs = ReadBuffer('[\n\n]')
+    const rs = new ReadBuffer('[\n\n]')
     rs
-      .pipe(SplitLine())
-      .pipe(JsonArray())
-      .pipe(Through.obj(
+      .pipe(new SplitLine())
+      .pipe(new JsonArray())
+      .pipe(Through.throughObj(
         function transform (obj) {},
         function flush () {
           done()
@@ -42,9 +37,9 @@ describe('#JsonArray', function () {
     const rs = fs.createReadStream(path.resolve(__dirname, 'fixtures/test.json'))
 
     rs
-      .pipe(SplitLine({ chomp: true }))
-      .pipe(JsonArray())
-      .pipe(Through.obj(
+      .pipe(new SplitLine({ chomp: true }))
+      .pipe(new JsonArray())
+      .pipe(Through.throughObj(
         function transform (obj) {
         // ~ console.log(obj)
           last = obj
@@ -66,9 +61,9 @@ describe('#JsonArray', function () {
     const rs = fs.createReadStream(path.resolve(__dirname, 'fixtures/test.json'))
 
     rs
-      .pipe(SplitLine({ chomp: true }))
-      .pipe(JsonArray({ error: true }))
-      .pipe(Through.obj(
+      .pipe(new SplitLine({ chomp: true }))
+      .pipe(new JsonArray({ error: true }))
+      .pipe(Through.throughObj(
         function transform (obj) {
           if (obj instanceof Error) {
             errs.push(obj)
@@ -77,7 +72,7 @@ describe('#JsonArray', function () {
           }
         }
       ))
-      .pipe(Through.obj(
+      .pipe(Through.throughObj(
         function transform (obj) {
           last = obj
           cnt++
@@ -100,10 +95,10 @@ describe('#JsonArray', function () {
     const ws = fs.createWriteStream(path.resolve(__dirname, 'fixtures/out.stringify.json'))
 
     rs
-      .pipe(SplitLine({ chomp: true }))
+      .pipe(new SplitLine({ chomp: true }))
       .pipe(JsonArray.parse())
       .pipe(JsonArray.stringify())
-      .pipe(Through(
+      .pipe(Through.through(
         function transform (line) {
           all += line.toString()
           this.push(line)
@@ -130,10 +125,10 @@ describe('#JsonArray', function () {
     const ws = fs.createWriteStream(path.resolve(__dirname, 'fixtures/out.stringify.json'))
 
     rs
-      .pipe(SplitLine({ chomp: true }))
+      .pipe(new SplitLine({ chomp: true }))
       .pipe(JsonArray.parse())
       .pipe(JsonArray.stringify({ validJson: false }))
-      .pipe(Through(
+      .pipe(Through.through(
         function transform (line) {
           all += line.toString()
           this.push(line)

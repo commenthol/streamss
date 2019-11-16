@@ -12,7 +12,7 @@ const { ReadBuffer, Through } = require('..')
 
 describe('#ReadBuffer', function () {
   it('without new operator', function () {
-    const readBuffer = ReadBuffer()
+    const readBuffer = new ReadBuffer()
     assert.ok(readBuffer instanceof ReadBuffer)
   })
 
@@ -22,10 +22,10 @@ describe('#ReadBuffer', function () {
     let cnt = 0
     res.pop()
 
-    ReadBuffer(
+    new ReadBuffer(
       { highWaterMark: 5 },
       buffer
-    ).pipe(Through(
+    ).pipe(Through.through(
       function transform (chunk) {
         assert.ok(chunk instanceof Buffer)
         assert.strictEqual(chunk.toString(), res[cnt] + ' ')
@@ -44,10 +44,10 @@ describe('#ReadBuffer', function () {
     let cnt = 0
     res.pop()
 
-    ReadBuffer(
+    new ReadBuffer(
       { highWaterMark: 5 },
       Buffer.from(buffer)
-    ).pipe(Through(
+    ).pipe(Through.through(
       function transform (chunk) {
         assert.ok(chunk instanceof Buffer)
         assert.strictEqual(chunk.toString(), res[cnt] + ' ')
@@ -63,9 +63,9 @@ describe('#ReadBuffer', function () {
   it('push string without options', function (done) {
     const buffer = 'abcd efgh ijkl mnop '
 
-    ReadBuffer(
+    new ReadBuffer(
       buffer
-    ).pipe(Through(
+    ).pipe(Through.through(
       function transform (chunk) {
         assert.ok(chunk instanceof Buffer)
         assert.strictEqual(chunk.toString(), buffer)
@@ -79,9 +79,9 @@ describe('#ReadBuffer', function () {
   it('push buffer without options', function (done) {
     const buffer = 'abcd efgh ijkl mnop '
 
-    ReadBuffer(
+    new ReadBuffer(
       Buffer.from(buffer)
-    ).pipe(Through(
+    ).pipe(Through.through(
       function transform (chunk) {
         assert.ok(chunk instanceof Buffer)
         assert.strictEqual(chunk.toString(), buffer)

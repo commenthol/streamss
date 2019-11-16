@@ -19,7 +19,7 @@ describe('#ReadArray', function () {
   })
 
   it('without new operator', function () {
-    const readArray = ReadArray()
+    const readArray = new ReadArray()
     assert.ok(readArray instanceof ReadArray)
   })
 
@@ -27,8 +27,8 @@ describe('#ReadArray', function () {
     const array = ['0', '1', '2', '3', '4', '5', '6']
     let cnt = 0
 
-    ReadArray(array.slice())
-      .pipe(Through(
+    new ReadArray(array.slice())
+      .pipe(Through.through(
         function transform (chunk) {
           cnt++
         },
@@ -43,8 +43,8 @@ describe('#ReadArray', function () {
     const array = [0, 1, { two: 2 }, 3, 4, 5, { six: 6 }]
     let cnt = 0
 
-    ReadArray.obj(array.slice())
-      .pipe(Through.obj(
+    ReadArray.readArrayObj(array.slice())
+      .pipe(Through.throughObj(
         function transform (chunk) {
           cnt++
         },
@@ -61,14 +61,14 @@ describe('#ReadArray', function () {
     let cnt = 0
 
     rs
-      .pipe(SplitLine())
-      .pipe(Through(
+      .pipe(new SplitLine())
+      .pipe(Through.through(
         function transform (chunk) {
           array.push(chunk.toString())
         },
         function flush () {
-          ReadArray(array.sort().slice())
-            .pipe(Through(
+          new ReadArray(array.sort().slice())
+            .pipe(Through.through(
               function transform (chunk) {
                 cnt++
                 assert.strictEqual(chunk instanceof Buffer, true)

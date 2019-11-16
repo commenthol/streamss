@@ -18,11 +18,6 @@ describe('#Split', function () {
     assert.ok(split instanceof Split)
   })
 
-  it('without new operator', function () {
-    const split = Split()
-    assert.ok(split instanceof Split)
-  })
-
   it('count lines', function (testDone) {
     let cnt = 0
     let last
@@ -32,8 +27,8 @@ describe('#Split', function () {
     })
 
     rs
-      .pipe(Split())
-      .pipe(Through(
+      .pipe(new Split())
+      .pipe(Through.through(
         function transform (chunk) {
         // ~ console.log('>>', cnt, JSON.stringify(chunk.toString()));
           last = chunk
@@ -60,8 +55,8 @@ describe('#Split', function () {
     })
 
     rs
-      .pipe(Split({ matcher: /\r?\n/ }))
-      .pipe(Through(
+      .pipe(new Split({ matcher: /\r?\n/ }))
+      .pipe(Through.through(
         function transform (chunk) {
         // ~ console.log('>>', cnt, JSON.stringify(chunk.toString()));
           last = chunk
@@ -84,8 +79,8 @@ describe('#Split', function () {
     })
 
     rs
-      .pipe(Split(/(is)/))
-      .pipe(Through(
+      .pipe(new Split(/(is)/))
+      .pipe(Through.through(
         function transform (chunk) {
         // ~ console.log('>>', cnt, JSON.stringify(chunk.toString()));
           last = chunk

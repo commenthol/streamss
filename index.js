@@ -2,12 +2,27 @@
 
 'use strict'
 
+const Through = require('streamss-through')
+const { through, throughObj } = Through
+const JsonArray = require('./src/JsonArray')
+const ReadArray = require('./src/ReadArray')
+const { readArrayObj } = ReadArray
+const ReadBuffer = require('./src/ReadBuffer')
+const Split = require('./src/Split')
+const SplitLine = require('./src/SplitLine')
+const WriteArray = require('./src/WriteArray')
+const { writeArrayObj } = WriteArray
+
 module.exports = {
-  ReadArray:  require('./lib/readarray'),
-  ReadBuffer: require('./lib/readbuffer'),
-  WriteArray: require('./lib/writearray'),
-  Through:    require('streamss-through'),
-  Split:      require('./lib/split'),
-  SplitLine:  require('./lib/splitline'),
-  JsonArray:  require('./lib/jsonarray')
+  Through,
+  through,
+  throughObj,
+  JsonArray,
+  ReadArray,
+  readArrayObj,
+  ReadBuffer,
+  Split,
+  SplitLine,
+  WriteArray,
+  writeArrayObj
 }

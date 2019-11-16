@@ -8,7 +8,7 @@
 /* global describe, it */
 
 const assert = require('assert')
-const { ReadArray, WriteArray, Through } = require('..')
+const { ReadArray, readArrayObj, WriteArray, writeArrayObj, throughObj } = require('..')
 
 describe('#WriteArray', function () {
   it('with new operator', function () {
@@ -16,18 +16,13 @@ describe('#WriteArray', function () {
     assert.ok(writeArray instanceof WriteArray)
   })
 
-  it('without new operator', function () {
-    const writeArray = WriteArray()
-    assert.ok(writeArray instanceof WriteArray)
-  })
-
   it('read and write array of buffers', function (testDone) {
     const array = ['0', '1', '2', '3', '4', '5', '6']
 
-    ReadArray(
+    new ReadArray(
       array.slice()
     )
-      .pipe(WriteArray(
+      .pipe(new WriteArray(
         function (err, data) {
           assert.ok(!err, '' + err)
           assert.strictEqual(data.length, array.length)
@@ -39,11 +34,11 @@ describe('#WriteArray', function () {
   it('read and write array of strings', function (testDone) {
     const array = ['0', '1', '2', '3', '4', '5', '6']
 
-    ReadArray(
+    new ReadArray(
       { encoding: 'utf8' },
       array.slice()
     )
-      .pipe(WriteArray(
+      .pipe(new WriteArray(
         { decodeStrings: false },
         function (err, data) {
         // ~ console.log(data);
@@ -57,10 +52,10 @@ describe('#WriteArray', function () {
   it('read and write array of objects', function (testDone) {
     const array = [0, 1, { two: 2 }, 3, 4, 5, { six: 6 }]
 
-    ReadArray.obj(
+    readArrayObj(
       array.slice()
     )
-      .pipe(WriteArray.obj(
+      .pipe(writeArrayObj(
         function (err, data) {
         // ~ console.log(data);
           assert.ok(!err, '' + err)
@@ -73,10 +68,10 @@ describe('#WriteArray', function () {
   it('read and write array of objects throws error', function (testDone) {
     const array = [0, 1, { two: 2 }, 3, 4, 5, { six: 6 }]
 
-    ReadArray.obj(
+    readArrayObj(
       array.slice()
     )
-      .pipe(Through.obj(
+      .pipe(throughObj(
         function (data) {
           this.push(data)
           // ~ console.log(data)
@@ -85,13 +80,13 @@ describe('#WriteArray', function () {
           }
         }
       ))
-      .pipe(Through.obj(
+      .pipe(throughObj(
         { passError: true },
         function (data) {
           this.push(data)
         }
       ))
-      .pipe(WriteArray.obj(
+      .pipe(writeArrayObj(
         function (err, data) {
         // ~ console.log(err, data);
           assert.strictEqual(err.message, 'bamm')
