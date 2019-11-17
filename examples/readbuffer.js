@@ -1,10 +1,9 @@
-var ReadBuffer = require('..').ReadBuffer
-var WriteArray = require('..').WriteArray
+const { ReadBuffer, WriteArray } = require('..')
 
-var str = 'line 1\nline 2\nline 3\nline 4'
+const str = 'line 1\nline 2\nline 3\nline 4'
 
 ReadBuffer(
-  {highWaterMark: 7, encoding: 'utf8'},
+  { highWaterMark: 7, encoding: 'utf8' },
   str
 ).pipe(WriteArray(
   { decodeStrings: false },

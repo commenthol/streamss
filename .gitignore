@@ -2,5 +2,6 @@
 /test/fixtures/out.*
 /coverage
 /doc
+/tmp
 *.log
 *.tgz

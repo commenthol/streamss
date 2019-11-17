@@ -56,18 +56,17 @@ For all other node versions greater v0.8.x the built-in `stream` module is used.
 #### Example
 
 ```javascript
-var Split = require('streamss').Split;
-var Through = require('streamss').Through;
+const { Split, Through } = require('streamss')
 
 require('fs').createReadStream(__dirname + '/../test/test.txt')
-    .pipe(Split({ matcher: ' are ', encoding: 'utf8' }))
-    .pipe(Through(
-        { decodeStrings: false },
-        function(string) {
-            this.push('>>>' + string + '<<<\n');
-        }
-    ))
-    .pipe(process.stdout);
+  .pipe(Split({ matcher: ' are ', encoding: 'utf8' }))
+  .pipe(Through(
+    { decodeStrings: false },
+    function(string) {
+      this.push('>>>' + string + '<<<\n')
+    }
+  ))
+  .pipe(process.stdout)
 ```
 
 Run in terminal:
@@ -95,18 +94,17 @@ Works on buffers - should therefore be faster than `Split`.
 #### Example
 
 ```javascript
-var Split = require('streamss').Split;
-var Through = require('streamss').Through;
+const { Split, Through } = require('streamss')
 
 require('fs').createReadStream(__dirname + '/../test/test.txt')
-    .pipe(SplitLine({ matcher: 'i', chomp: true, encoding: 'utf8' }))
-    .pipe(Through(
-        { decodeStrings: false },
-        function(string) {
-            this.push('>>>' + string + '<<<\n');
-        }
-    ))
-    .pipe(process.stdout);
+  .pipe(SplitLine({ matcher: 'i', chomp: true, encoding: 'utf8' }))
+  .pipe(Through(
+    { decodeStrings: false },
+    function(string) {
+      this.push('>>>' + string + '<<<\n')
+    }
+  ))
+  .pipe(process.stdout)
 ```
 
 Run in terminal:
@@ -164,14 +162,13 @@ NOTE: Requires that the stream is split beforehand using `Split` or `SplitLine`.
 #### Example
 
 ```javascript
-var JsonArray = require('streamss').JsonArray;
-var SplitLine = require('streamss').SplitLine;
+const { JsonArray, SplitLine } = require('streamss')
 
 require('fs').createReadStream(__dirname + '/../test/test.json')
-    .pipe(SplitLine())
-    .pipe(JsonArray.parse())
-    .pipe(JsonArray.stringify())
-    .pipe(process.stdout);
+  .pipe(SplitLine())
+  .pipe(JsonArray.parse())
+  .pipe(JsonArray.stringify())
+  .pipe(process.stdout)
 ```
 
 Run in terminal:
@@ -229,20 +226,20 @@ Pushes only size bytes if `highWaterMark` is set.
 Pushes a string per 7 bytes as stream into an array.
 
 ```javascript
-var ReadArray = require('streamss').ReadArray;
-var WriteArray = require('streamss').WriteArray;
+const { ReadArray, WriteArray } = require('streamss')
 
-var str = "line 1\nline 2\nline 3\nline 4";
+const str = "line 1\nline 2\nline 3\nline 4";
+
 ReadBuffer(
-    {highWaterMark: 7, encoding: 'utf8'},
-    str
+  {highWaterMark: 7, encoding: 'utf8'},
+  str
 ).pipe(WriteArray(
-    { decodeStrings: false },
-        function(err, arr){
-            console.log(arr);
-            //> [ 'line 1\n', 'line 2\n', 'line 3\n', 'line 4' ]
-    })
-);
+  { decodeStrings: false },
+  function(err, arr){
+    console.log(arr)
+    //> [ 'line 1\n', 'line 2\n', 'line 3\n', 'line 4' ]
+  })
+)
 ```
 
 ### WriteArray([options], callback)
@@ -274,32 +271,30 @@ ReadBuffer(
 #### Example
 
 ```javascript
-var ReadArray = require('streamss').ReadArray;
-var WriteArray = require('streamss').WriteArray;
-var Through = require('streamss').Through;
+const { ReadArray, WriteArray, Through } = require('streamss')
 
-var array = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '10' ];
-var cnt = 0;
+const array = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '10' ]
+let cnt = 0
 
 ReadArray(
-        { encoding: 'utf8'},
-        array
-    )
-    .pipe(Through(
-        { encoding: 'utf8'},
-        function(str) {
-            if (cnt++ % 2) {
-                this.push(str);
-            }
-        }
-    ))
-    .pipe(WriteArray(
-        { decodeStrings: false },
-        function(err, arr){
-            console.log(arr);
-            //> [ '2', '4', '6', '8', '10' ]
-        })
-    );
+  { encoding: 'utf8'},
+  array
+)
+.pipe(Through(
+  { encoding: 'utf8'},
+  function(str) {
+    if (cnt++ % 2) {
+      this.push(str)
+    }
+  }
+))
+.pipe(WriteArray(
+  { decodeStrings: false },
+  function(err, arr){
+    console.log(arr)
+    //> [ '2', '4', '6', '8', '10' ]
+  })
+)
 ```
 
 Run in terminal:
@@ -326,12 +321,10 @@ all code is your original work.
 
 ## License
 
-Copyright (c) 2014-2015, Commenthol. (MIT License)
+Copyright (c) 2014, Commenthol. (MIT License)
 
 See [LICENSE][] for more info.
 
 [LICENSE]: ./LICENSE
 [streamss-through]: https://github.com/commenthol/streamss-through
 [readable-stream]: https://github.com/isaacs/readable-stream
-
-

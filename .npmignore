@@ -4,6 +4,7 @@
 /coverage
 /test
 /doc
+/tmp
 jsdoc.json
 Makefile
 .*

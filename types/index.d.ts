@@ -1,0 +1,11 @@
+export const Through: any;
+export const through: any;
+export const throughObj: any;
+export const JsonArray: typeof import("./src/JsonArray");
+export const ReadArray: typeof import("./src/ReadArray");
+export const readArrayObj: typeof import("./src/ReadArray").readArrayObj;
+export const ReadBuffer: typeof import("./src/ReadBuffer");
+export const Split: typeof import("./src/Split");
+export const SplitLine: typeof import("./src/SplitLine");
+export const WriteArray: typeof import("./src/WriteArray");
+export const writeArrayObj: typeof import("./src/WriteArray").writeArrayObj;
