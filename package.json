@@ -24,7 +24,7 @@
   },
   "scripts": {
     "all": "npm run clean && npm run lint && npm test",
-    "build:tsc": "tsc --build; find types -iname '*.js' -exec rm '{}' \\;",
+    "build:tsc": "tsc --build types; find types -iname '*.js' -exec rm '{}' \\;",
     "clean": "rimraf coverage .nyc_output",
     "clean:all": "rimraf node_modules && npm run clean",
     "coverage": "nyc -r text -r html npm test",
@@ -47,7 +47,7 @@
     }
   },
   "dependencies": {
-    "streamss-through": "^2.0.0-0"
+    "streamss-through": "^2.0.0"
   },
   "devDependencies": {
     "eslint": "^6.6.0",
